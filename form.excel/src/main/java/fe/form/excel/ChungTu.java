@@ -1,6 +1,5 @@
 package fe.form.excel;
 
-import java.awt.Font;
 import java.io.*;
 
 import javax.swing.JOptionPane;
@@ -8,7 +7,6 @@ import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -44,8 +42,8 @@ public class ChungTu {
 	}
 
 	public void createChungTu1(String name) throws IOException {
-		File source = new File("C:/Users/Admin/Desktop/FormWithExcel/sampleForm1.xlsx");
-		File dest = new File("C:/Users/Admin/Desktop/FormWithExcel/new/" + name + "_Lien1.xlsx");
+		File source = new File("./sampleForm1.xlsx");
+		File dest = new File("./new/" + name + "_Lien1.xlsx");
 		long start = System.nanoTime();
 		copyFileUsingStream(source, dest);
 		this.fileForm = dest;
@@ -129,8 +127,8 @@ public class ChungTu {
 	}
 	
 	public void createChungTu2(String name) throws IOException {
-		File source = new File("C:/Users/Admin/Desktop/FormWithExcel/sampleForm2.xlsx");
-		File dest = new File("C:/Users/Admin/Desktop/FormWithExcel/new/" + name + "_Lien2.xlsx");
+		File source = new File("./sampleForm2.xlsx");
+		File dest = new File("./new/" + name + "_Lien2.xlsx");
 		long start = System.nanoTime();
 		copyFileUsingStream(source, dest);
 		this.fileForm = dest;

@@ -1,19 +1,14 @@
 package fe.form.excel;
 
-import java.awt.FileDialog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -45,7 +40,8 @@ public class So1Cua {
 	}
 
 	public void chooseFile(JFrame frame) {
-		JFileChooser chooser = new JFileChooser("C:/Users/Admin/Desktop/FormWithExcel");
+		JFileChooser chooser = new JFileChooser("./");
+//		JFileChooser chooser = new JFileChooser("../FormWithExcel");
 		int returnVal = chooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
