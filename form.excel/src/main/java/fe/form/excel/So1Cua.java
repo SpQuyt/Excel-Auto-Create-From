@@ -9,6 +9,8 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -41,7 +43,10 @@ public class So1Cua {
 
 	public void chooseFile(JFrame frame) {
 		JFileChooser chooser = new JFileChooser("./");
-//		JFileChooser chooser = new JFileChooser("../FormWithExcel");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files only", "xlsx", "xls");
+		chooser.addChoosableFileFilter(filter);
+		chooser.setAcceptAllFileFilterUsed(false);
+		
 		int returnVal = chooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
@@ -51,27 +56,23 @@ public class So1Cua {
 			try {
 				inputStream = new FileInputStream(this.file);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			XSSFWorkbook workbook = null;
 			try {
 				workbook = new XSSFWorkbook(inputStream);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				inputStream.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			FileOutputStream out = null;
 			try {
 				out = new FileOutputStream(this.file);
 			} catch (FileNotFoundException e) {
-//				frame.dispose();
 				this.file = null;
 				JOptionPane.showMessageDialog(null, "Tắt Sổ 1 Cửa rồi chọn lại!");
 			}
@@ -79,11 +80,9 @@ public class So1Cua {
 				workbook.write(out);
 				out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				frame.dispose();
 				e.printStackTrace();
 			}
-//			this.approve = 1;
 		} else {
 
 		}
@@ -146,7 +145,6 @@ public class So1Cua {
 				JOptionPane.showMessageDialog(null, "Đã thêm " + form.getMaSo() + " vào sổ 1 cửa!");
 				out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
