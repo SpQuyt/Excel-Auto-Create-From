@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.poi.ss.usermodel.*;
@@ -98,7 +99,7 @@ public class So1Cua {
 		return 1;
 	}
 
-	public void updateSo1Cua(Form form) throws IOException {
+	public void updateSo1Cua(Form form, JTextPane so1cuathongbao) throws IOException {
 		Cell cell;
 		Row row;
 		CellStyle style;
@@ -142,7 +143,7 @@ public class So1Cua {
 			FileOutputStream out = new FileOutputStream(file);
 			try {
 				workbook.write(out);
-				JOptionPane.showMessageDialog(null, "Đã thêm " + form.getMaSo() + " vào sổ 1 cửa!");
+				so1cuathongbao.setText(form.getMaSo() + " đã được thêm vào sổ 1 cửa!");
 				out.close();
 			} catch (IOException e) {
 				e.printStackTrace();

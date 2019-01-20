@@ -3,6 +3,7 @@ package fe.form.excel;
 import java.io.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -50,7 +51,7 @@ public class ChungTu {
 		System.out.println("Time taken by Stream Copy = " + (System.nanoTime() - start));
 	}
 
-	public void updateChungTu1(Form form) throws IOException {
+	public void updateChungTu1(Form form, JTextPane lien1thongbao) throws IOException {
 		Cell cell;
 		Row row;
 		CellStyle style;
@@ -118,7 +119,7 @@ public class ChungTu {
 		FileOutputStream out = new FileOutputStream(fileForm);
 		try {
 			workbook.write(out);
-			JOptionPane.showMessageDialog(null, "Đã tạo mới chứng từ " + form.getMaSo() + " Liên 1!");
+			lien1thongbao.setText(form.getMaSo() + " Liên 1 đã được tạo mới!");
 			out.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -135,7 +136,7 @@ public class ChungTu {
 		System.out.println("Time taken by Stream Copy = " + (System.nanoTime() - start));
 	}
 
-	public void updateChungTu2(Form form) throws IOException {
+	public void updateChungTu2(Form form, JTextPane lien2thongbao) throws IOException {
 		Cell cell;
 		Row row;
 		CellStyle style;
@@ -203,7 +204,7 @@ public class ChungTu {
 		FileOutputStream out = new FileOutputStream(fileForm);
 		try {
 			workbook.write(out);
-			JOptionPane.showMessageDialog(null, "Đã tạo mới chứng từ " + form.getMaSo() + " Liên 2!");
+			lien2thongbao.setText(form.getMaSo() + " Liên 2 đã được tạo mới!");
 			out.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

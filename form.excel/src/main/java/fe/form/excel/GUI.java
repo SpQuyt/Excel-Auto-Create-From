@@ -11,15 +11,13 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-
-	JTextField field;
-	JButton button;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -35,7 +33,12 @@ public class GUI extends JFrame {
 	private JTextPane textPane_6;
 	private JTextPane textPane_7;
 	private JTextPane textPane_8;
+	private JTextPane so1cuathongbao;
+	private JTextPane lien1thongbao;
+	private JTextPane lien2thongbao;
 	private JPanel contentPanel;
+	private JFrame frame;
+	private File testExist = new File("./lock.file");
 	public FileInputStream inputStream2;
 	public XSSFWorkbook workbookform;
 	public XSSFSheet sheetform;
@@ -44,7 +47,7 @@ public class GUI extends JFrame {
 		new GUI();
 	}
 
-	public void initialize() {
+	public void createTextpaneAndTextfield() {
 		contentPanel = new JPanel();
 
 		textPane = new JTextPane();
@@ -62,12 +65,12 @@ public class GUI extends JFrame {
 		textPane_2 = new JTextPane();
 		textPane_2.setText("Mã số:");
 		textPane_2.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		textPane_2.setBounds(484, 45, 41, 20);
+		textPane_2.setBounds(484, 42, 41, 20);
 		contentPanel.add(textPane_2);
 
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(526, 33, 117, 32);
+		textField.setBounds(526, 39, 117, 26);
 		contentPanel.add(textField);
 
 		textField_1 = new JTextField();
@@ -130,84 +133,111 @@ public class GUI extends JFrame {
 		textPane_8.setFont(new Font("Times New Roman", Font.PLAIN, 9));
 		textPane_8.setBounds(548, 11, 98, 20);
 		contentPanel.add(textPane_8);
+		
+		so1cuathongbao = new JTextPane();
+		so1cuathongbao.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		so1cuathongbao.setBounds(35, 300, 330, 35);
+		contentPanel.add(so1cuathongbao);
+		
+		lien1thongbao = new JTextPane();
+		lien1thongbao.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lien1thongbao.setBounds(35, 346, 330, 35);
+		contentPanel.add(lien1thongbao);
+		
+		lien2thongbao = new JTextPane();
+		lien2thongbao.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lien2thongbao.setBounds(34, 389, 331, 36);
+		contentPanel.add(lien2thongbao);
 	}
 
-	public GUI() throws IOException {
-		final Form form = new Form();
-		final ChungTu chungtu = new ChungTu();
-		final So1Cua so1cua = new So1Cua();
-//		final FileWriter fw;
+	public void createFrame() {
+		this.frame = new JFrame();
+		this.contentPanel.setLayout(null);
+		this.frame.setContentPane(this.contentPanel);
+		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.frame.getContentPane().setLayout(null);
+		this.frame.setBounds(350, 200, 700, 487);
+		this.frame.setVisible(true);
+		this.frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (JOptionPane.showConfirmDialog(frame, "Bạn có muốn đóng phần mềm này?", "Form With Excel",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+					testExist.delete();
+					System.exit(0);
+				}
+			}
+		});
+		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	}
 
-		JOptionPane.showMessageDialog(null, "Hãy tắt Sổ 1 Cửa trước khi sử dụng phần mềm nhé!");
-
-		this.initialize();
-
-		final JFrame frame = new JFrame();
-		contentPanel.setLayout(null);
-		frame.setContentPane(contentPanel);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setBounds(350, 200, 700, 400);
-		frame.setVisible(true);
-
+	public void createButton(final So1Cua so1cua, final ChungTu chungtu, final Form form) {
 		JButton btnClickMe = new JButton("Vào sổ 1 cửa");
 		btnClickMe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lien1thongbao.setText("");
+				lien2thongbao.setText("");
+				so1cuathongbao.setText("");
 				if (textField.getText().compareTo("") == 0 || textField_1.getText().compareTo("") == 0
 						|| textField_2.getText().compareTo("") == 0 || textField_3.getText().compareTo("") == 0
 						|| textField_4.getText().compareTo("") == 0 || textField_5.getText().compareTo("") == 0) {
 					JOptionPane.showMessageDialog(null, "Mọi ô trống phải được điền đầy đủ!");
 				} else {
-					form.setMaSo(textField.getText());
-					form.setNguonKinhPhi(textField_1.getText());
-					form.setSoHoatDong(textField_2.getText());
-					form.setNoiDung(textField_3.getText());
-					form.setSoTien(Long.parseLong(textField_4.getText()));
-					form.setKhoaPhong(textField_5.getText());
+					try {
+						form.setMaSo(textField.getText());
+						form.setNguonKinhPhi(textField_1.getText());
+						form.setSoHoatDong(textField_2.getText());
+						form.setNoiDung(textField_3.getText());
+						form.setSoTien(Long.parseLong(textField_4.getText()));
+						form.setKhoaPhong(textField_5.getText());
 
-					// sổ 1 cửa
-					if (so1cua.getFile() == null) {
-						JOptionPane.showMessageDialog(null, "Chưa tệp nào được chọn!");
-					} else {
-						System.out.println(so1cua.getFile());
-						try {
-							so1cua.updateSo1Cua(form);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-						if (so1cua.getCheckRepe() == 0) {
-							// nhật ký lưu chuyển chứng từ liên 1
-							try {
-								chungtu.createChungTu1(form.getMaSo());
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							try {
-								chungtu.updateChungTu1(form);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							
-							// nhật ký lưu chuyển chứng từ liên 2
-							try {
-								chungtu.createChungTu2(form.getMaSo());
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							try {
-								chungtu.updateChungTu2(form);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
+						// sổ 1 cửa
+						if (so1cua.getFile() == null) {
+							JOptionPane.showMessageDialog(null, "Chưa tệp nào được chọn!");
 						} else {
-							so1cua.setCheckRepe(0);
+							System.out.println(so1cua.getFile());
+							try {
+								so1cua.updateSo1Cua(form,so1cuathongbao);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+							if (so1cua.getCheckRepe() == 0) {
+								// nhật ký lưu chuyển chứng từ liên 1
+								try {
+									chungtu.createChungTu1(form.getMaSo());
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+								try {
+									chungtu.updateChungTu1(form,lien1thongbao);
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+
+								// nhật ký lưu chuyển chứng từ liên 2
+								try {
+									chungtu.createChungTu2(form.getMaSo());
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+								try {
+									chungtu.updateChungTu2(form,lien2thongbao);
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+							} else {
+								so1cua.setCheckRepe(0);
+							}
 						}
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Ô \"Số tiền\" chỉ được nhập số!");
 					}
+					
 				}
 			}
 		});
-		btnClickMe.setBounds(456, 312, 179, 39);
+		btnClickMe.setBounds(464, 376, 179, 39);
 		contentPanel.add(btnClickMe);
 
 		JButton btnChnTp = new JButton("Chọn tệp");
@@ -221,5 +251,21 @@ public class GUI extends JFrame {
 		});
 		btnChnTp.setBounds(23, 39, 89, 23);
 		contentPanel.add(btnChnTp);
+	}
+
+	public GUI() throws IOException {		
+		if (testExist.exists()) {
+			JOptionPane.showMessageDialog(null, "Bạn chỉ được phép mở 1 phần mềm cùng 1 lúc!");
+		} else {
+			testExist.createNewFile();
+			Form form = new Form();
+			ChungTu chungtu = new ChungTu();
+			So1Cua so1cua = new So1Cua();
+
+			createTextpaneAndTextfield();
+			createFrame();
+			createButton(so1cua, chungtu, form);
+		}
+
 	}
 }
