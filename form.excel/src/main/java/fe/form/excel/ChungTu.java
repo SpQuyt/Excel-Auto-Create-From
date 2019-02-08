@@ -8,6 +8,7 @@ import javax.swing.JTextPane;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -104,6 +105,7 @@ public class ChungTu {
 		style = cell.getCellStyle();
 		style.setFont(font);
 		style.setVerticalAlignment(VerticalAlignment.TOP);
+		style.setAlignment(HorizontalAlignment.LEFT);
 		cell.setCellValue(form.getSoTien());
 		
 		row = sheet.getRow(6);
