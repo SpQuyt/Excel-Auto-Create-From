@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -38,6 +39,7 @@ public class GUI extends JFrame {
 	private JTextPane lien2thongbao;
 	private JPanel contentPanel;
 	private JFrame frame;
+	private JLabel lblChaBit;
 	private File testExist = new File("./lock.file");
 	public FileInputStream inputStream2;
 	public XSSFWorkbook workbookform;
@@ -59,7 +61,7 @@ public class GUI extends JFrame {
 		txtpnChaTpNo = new JTextPane();
 		txtpnChaTpNo.setText("Chưa tệp nào được chọn");
 		txtpnChaTpNo.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtpnChaTpNo.setBounds(122, 42, 135, 20);
+		txtpnChaTpNo.setBounds(122, 42, 288, 25);
 		contentPanel.add(txtpnChaTpNo);
 
 		textPane_2 = new JTextPane();
@@ -136,7 +138,7 @@ public class GUI extends JFrame {
 		
 		so1cuathongbao = new JTextPane();
 		so1cuathongbao.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		so1cuathongbao.setBounds(35, 300, 330, 35);
+		so1cuathongbao.setBounds(35, 300, 318, 35);
 		contentPanel.add(so1cuathongbao);
 		
 		lien1thongbao = new JTextPane();
@@ -148,6 +150,14 @@ public class GUI extends JFrame {
 		lien2thongbao.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lien2thongbao.setBounds(34, 389, 331, 36);
 		contentPanel.add(lien2thongbao);
+		
+		JLabel lblNewLabel = new JLabel("Mã số chứng từ mới nhất: ");
+		lblNewLabel.setBounds(383, 313, 169, 26);
+		contentPanel.add(lblNewLabel);
+		
+		lblChaBit = new JLabel("Chưa biết");
+		lblChaBit.setBounds(562, 313, 84, 26);
+		contentPanel.add(lblChaBit);
 	}
 
 	public void createFrame() {
@@ -243,14 +253,18 @@ public class GUI extends JFrame {
 		JButton btnChnTp = new JButton("Chọn tệp");
 		btnChnTp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				so1cua.chooseFile(frame);
+				so1cua.chooseFile(frame,lblChaBit);
 				if (so1cua.getFile() != null) {
 					txtpnChaTpNo.setText(so1cua.getFile().getName());
+					lien1thongbao.setText("");
+					lien2thongbao.setText("");
+					so1cuathongbao.setText("");
 				}
 			}
 		});
 		btnChnTp.setBounds(23, 39, 89, 23);
 		contentPanel.add(btnChnTp);
+	
 	}
 
 	public GUI() throws IOException {		
@@ -266,6 +280,13 @@ public class GUI extends JFrame {
 			createFrame();
 			createButton(so1cua, chungtu, form);
 		}
-
+//		testExist.createNewFile();
+//		Form form = new Form();
+//		ChungTu chungtu = new ChungTu();
+//		So1Cua so1cua = new So1Cua();
+//
+//		createTextpaneAndTextfield();
+//		createFrame();
+//		createButton(so1cua, chungtu, form);
 	}
 }
